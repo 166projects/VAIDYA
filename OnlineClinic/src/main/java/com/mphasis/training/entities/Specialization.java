@@ -1,0 +1,58 @@
+package com.mphasis.training.entities;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+
+@Entity
+public class Specialization implements Serializable {
+	private static final long serialVersionUID = 1L;
+	@Id
+	@Column(nullable=true)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "flight_seq")
+//	@GenericGenerator(
+//			name = "flight_seq",
+//			strategy = "com.mphasis.training.entities.StringPrefixedSequenceIdGenerator",
+//			parameters = {
+//					@Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "4"),
+//					@Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "FI"),
+//					@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d")})
+	private String sId;
+	@Column(nullable=false)
+	private String specialization_name;
+	@ManyToOne
+	private Doctor doctor;	
+	public String getsId() {
+		return sId;
+	}
+	public void setsId(String sId) {
+		this.sId = sId;
+	}
+	public String getSpecialization_name() {
+		return specialization_name;
+	}
+	public void setSpecialization_name(String specialization_name) {
+		this.specialization_name = specialization_name;
+	}
+	public Doctor getDoctor() {
+		return doctor;
+	}
+	public void setDoctors(Doctor doctor) {
+		this.doctor = doctor;
+	}
+	@Override
+	public String toString() {
+		return "Specialization [sId=" + sId + ", specialization_name=" + specialization_name + ", doctor=" + doctor
+				+ "]";
+	}
+	
+	
+}
