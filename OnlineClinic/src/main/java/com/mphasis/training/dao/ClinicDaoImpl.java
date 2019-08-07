@@ -1,5 +1,6 @@
 package com.mphasis.training.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -7,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.mphasis.training.entities.Clinic;
+import com.mphasis.training.entities.Doctor;
 
 public class ClinicDaoImpl implements ClinicDao {
 	@Autowired
@@ -23,6 +25,13 @@ public class ClinicDaoImpl implements ClinicDao {
 		Session session = sessionFactory.openSession();
 		Transaction tr = session.beginTransaction();
 		Clinic clinic1 = (Clinic) session.get(Clinic.class, clinic.getcId());
+		clinic1.setClinic_address(clinic.getClinic_address());
+		clinic1.setLocation(clinic.getLocation());
+		clinic1.setClinic_name(clinic.getClinic_name());
+		List<Doctor> doctors= new ArrayList();
+
+		
+		clinic1.setDoctors(doctors);
 		session.update(clinic1);
 		tr.commit();
 	}
@@ -42,5 +51,11 @@ public class ClinicDaoImpl implements ClinicDao {
 		List<Clinic> clinics = session.createCriteria(Clinic.class).list();
 		return clinics;
 	}
-
+	
+	public Clinic getClinicsByClinicName(Clinic clinic) {
+		Session session = sessionFactory.openSession();
+		System.out.println("Inside Dao");
+		Clinic clinic1 = (Clinic) session.get(Clinic.class, clinic.getClinic_name());
+		return clinic1;
+	}
 }

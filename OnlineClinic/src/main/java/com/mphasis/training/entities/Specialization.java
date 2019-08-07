@@ -28,8 +28,10 @@ public class Specialization implements Serializable {
 	private String sId;
 	@Column(nullable=false)
 	private String specialization_name;
+	
 	@ManyToOne
 	private Doctor doctor;	
+	
 	public String getsId() {
 		return sId;
 	}

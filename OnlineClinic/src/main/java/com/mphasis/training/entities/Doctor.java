@@ -17,10 +17,10 @@ import javax.persistence.OneToOne;
 public class Doctor implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(nullable=true)
+	@Column(nullable = true)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String dId;
-	
+
 	private int doctor_status;
 
 	@ManyToOne

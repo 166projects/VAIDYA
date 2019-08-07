@@ -29,6 +29,7 @@ public class DoctorDaoImpl implements DoctorDao {
 		Session session = sessionFactory.openSession();
 		Transaction tr = session.beginTransaction();
 		Doctor doctor1 = (Doctor) session.get(Doctor.class, doctor.getdId());
+		doctor1.setDoctor_status(doctor.getDoctor_status());
 		session.update(doctor1);
 		tr.commit();
 	}
@@ -49,11 +50,11 @@ public class DoctorDaoImpl implements DoctorDao {
 		return doctors;
 
 	}
-	public List<Doctor> getDoctorByClinic(int cname)
+	public List<Doctor> getDoctorByClinic(Clinic clinic)
 	{
 		Session session = sessionFactory.openSession();
 		System.out.println("Inside Dao");
-		List<Doctor> doctors = (List<Doctor>) session.get(Doctor.class,cname);
+		List<Doctor> doctors = (List<Doctor>) session.get(Doctor.class,clinic.getClinic_name());
 		return doctors;
 
 	}

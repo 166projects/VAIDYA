@@ -10,6 +10,6 @@ public interface DoctorDao {
 	public void updateDoctor(Doctor doctor);
 	public void deleteDoctor(int did) ;
 	public List<Doctor> getDoctors();
-	public List<Doctor> getDoctorByClinic(int cid);
+	public List<Doctor> getDoctorByClinic(Clinic clinic);
 
 }
