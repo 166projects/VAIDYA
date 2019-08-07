@@ -49,11 +49,11 @@ public class DoctorDaoImpl implements DoctorDao {
 		return doctors;
 
 	}
-	public List<Doctor> getDoctorByClinic(int cid)
+	public List<Doctor> getDoctorByClinic(int cname)
 	{
 		Session session = sessionFactory.openSession();
 		System.out.println("Inside Dao");
-		List<Doctor> doctors = (List<Doctor>) session.get(Doctor.class,cid);
+		List<Doctor> doctors = (List<Doctor>) session.get(Doctor.class,cname);
 		return doctors;
 
 	}
