@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
 
 @Entity
 public class Role implements Serializable {
@@ -17,8 +20,15 @@ public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(nullable=true)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String rId;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "flight_seq")
+	@GenericGenerator(
+			name = "flight_seq",
+			strategy = "com.mphasis.training.entities.StringPrefixedSequenceIdGenerator",
+			parameters = {
+					@Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
+					@Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "R"),
+					@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%02d")})
+		private String rId;
 	@Column(nullable=false)
 	private String role_name;
 	

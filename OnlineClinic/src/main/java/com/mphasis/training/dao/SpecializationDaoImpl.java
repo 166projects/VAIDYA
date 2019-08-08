@@ -5,9 +5,11 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mphasis.training.entities.Location;
 import com.mphasis.training.entities.Specialization;
+@Transactional
 @Repository
 public class SpecializationDaoImpl implements SpecializationDao {
 	@Autowired
@@ -18,7 +20,7 @@ public class SpecializationDaoImpl implements SpecializationDao {
 		Transaction tr = session.beginTransaction();
 		session.save(specialization);
 		tr.commit();
-
+	
 	}
 
 	public void updateSpecialization(Specialization specialization) {
@@ -29,7 +31,7 @@ public class SpecializationDaoImpl implements SpecializationDao {
 		specialization1.setDoctors(specialization.getDoctor());
 		session.update(specialization1);
 		tr.commit();
-
+		
 	}
 
 }

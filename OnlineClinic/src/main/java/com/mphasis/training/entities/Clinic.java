@@ -5,29 +5,40 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Clinic implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(nullable=true)
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(nullable = true)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "flight_seq")
+	@GenericGenerator(name = "flight_seq", strategy = "com.mphasis.training.entities.StringPrefixedSequenceIdGenerator", parameters = {
+			@Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
+			@Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "CL"),
+			@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%02d") })
 
 	private String cId;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
 	private String clinic_name;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String clinic_address;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Location location;
 
-	@OneToMany(mappedBy = "clinic")
+	@OneToMany(mappedBy = "clinic", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Doctor> doctors;
 
 	public String getcId() {
@@ -75,6 +86,5 @@ public class Clinic implements Serializable {
 		return "Clinic [cId=" + cId + ", clinic_name=" + clinic_name + ", clinic_address=" + clinic_address
 				+ ", location=" + location + ", doctors=" + doctors + "]";
 	}
-	
-	
+
 }

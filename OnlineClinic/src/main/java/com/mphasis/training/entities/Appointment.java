@@ -5,10 +5,14 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 
 @Entity
@@ -17,7 +21,15 @@ public class Appointment {
 
 	@Id
 	@Column(nullable=true)
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "flight_seq")
+	@GenericGenerator(
+			name = "flight_seq",
+			strategy = "com.mphasis.training.entities.StringPrefixedSequenceIdGenerator",
+			parameters = {
+					@Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
+					@Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "AP"),
+					@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%02d")})
+	
 	private String aId;
 
 	private String disease;
@@ -25,11 +37,10 @@ public class Appointment {
 	private LocalDateTime appointment_Time;
 	private String remark;
 	private String appointment_status;
-	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Doctor doctor;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Patient patient;
 	
 	public String getaId() {

@@ -39,10 +39,10 @@ public class AppConfig {
 		sessionFactory.setDataSource(getDataSource());
 		Properties props = new Properties();
 		props.put("hibernate.dialect", "org.hibernate.dialect.OracleDialect");
-		props.put("hibernate.hbm2ddl.auto", "create");
+		props.put("hibernate.hbm2ddl.auto", "update");
 		props.put("hibernate.show_sql", "true");
 		props.put("hibernate.format_sql", "true");
-		props.put("hibernate.default_schema","bhargava");
+//		props.put("hibernate.default_schema","bhargava");
 		sessionFactory.setHibernateProperties(props);
 		sessionFactory.setPackagesToScan("com.mphasis.training.entities");
 		return sessionFactory;
