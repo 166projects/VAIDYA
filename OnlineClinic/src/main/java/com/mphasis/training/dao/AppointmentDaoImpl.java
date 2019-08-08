@@ -1,6 +1,7 @@
 package com.mphasis.training.dao;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -36,20 +37,23 @@ public class AppointmentDaoImpl implements AppointmentDao {
 			List<Appointment> appointments = session.createCriteria(Appointment.class).list();
 			return appointments;
 
-		}/*
+		}
 		public List<Appointment> getAppointmentByDate(LocalDateTime appointment_time)
 		{
 			
 			Session session = sessionFactory.openSession();
 			System.out.println("Inside Dao");
-			List<Appointment> appointments = session.createCriteria(Appointment.class,appointment_time).list();
+			DateTimeFormatter format = DateTimeFormatter.ISO_DATE_TIME;
+			String formattedDateTime = appointment_time.format(format);
+			List<Appointment> appointments = session.createCriteria(Appointment.class,formattedDateTime).list();
 			return appointments;
-		}*/
+		}
 
 		public void deleteAppointment(int aid) {
 			Session session = sessionFactory.openSession();
 			Transaction tr = session.beginTransaction();
-			session.delete(aid);
+			Appointment appointment=(Appointment)session.get(Appointment.class, aid);
+			session.delete(appointment);
 			tr.commit();
 		}
 		
