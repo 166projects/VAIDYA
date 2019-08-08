@@ -24,7 +24,7 @@ public class AdminController {
 	@Autowired
 	LocationBo locationBo;
 
-	@RequestMapping(value = "/clinic", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/clinics", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Clinic> getAll() {
 		return clinicBo.getClinics();
 
@@ -41,7 +41,7 @@ public class AdminController {
 		System.out.println("inside controller");
 		locationBo.insertLocation(location);
 	}
-	@RequestMapping(value = "/location", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/locations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Location> getAllLocation() {
 		return locationBo.getLocation();
 

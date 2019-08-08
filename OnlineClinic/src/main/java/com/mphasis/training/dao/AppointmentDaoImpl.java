@@ -1,15 +1,16 @@
 package com.mphasis.training.dao;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.mphasis.training.entities.Appointment;
 import com.mphasis.training.entities.Doctor;
 import com.mphasis.training.entities.Patient;
@@ -24,15 +25,29 @@ public class AppointmentDaoImpl implements AppointmentDao {
 		Transaction tr = session.beginTransaction();
 		session.save(appointment);
 		tr.commit();
+
+	}		
+		public List<Appointment> getAppointmentByDate(LocalDateTime appointment_time)
+		{
+			
+			Session session = sessionFactory.openSession();
+			System.out.println("Inside Dao");
+			DateTimeFormatter format = DateTimeFormatter.ISO_DATE_TIME;
+			String formattedDateTime = appointment_time.format(format);
+			List<Appointment> appointments = session.createCriteria(Appointment.class,formattedDateTime).list();
+			session.close();
+			return appointments;
+			
+		}
 		
-	}
+	
 
 	public void updateAppointment(Appointment appointment) {
 		Session session = sessionFactory.openSession();
 		Transaction tr = session.beginTransaction();
 		session.update(appointment);
 		tr.commit();
-	
+
 	}
 
 	public List<Appointment> getAppointments() {
